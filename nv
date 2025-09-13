@@ -13,7 +13,7 @@ fi
 # Set up binaries
 for B in nvim neovide; do 
     W="$(which "$B" 2>/dev/null)"
-    D="${W-${BIN_PATH}/${B}}"
+    D="${W:-${BIN_PATH}/${B}}"
     if ! which "$D" >/dev/null 2>/dev/null; then
         echo "Error: Can't find $B: '$D'" >&2
         exit 1
@@ -55,6 +55,7 @@ case  $( \
         rm -f "$SOCK_PATH"
         echo -n 'Starting neovide with neovim server...'
         "$NEOVIDE" \
+            --neovim-bin "$NVIM" \
             --fork \
             --no-tabs \
             -- \
