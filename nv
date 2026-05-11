@@ -1,9 +1,9 @@
 #!/bin/bash
-#
-# Much simpler than the earlier version, but needs at least v0.16.0 of Neovide.
-#
+# only handle line number if argument is a single file
 if [[ "$*" =~ ^[^\ ]+:[0-9]+$ ]] ; then
-  args="+${*#*:} ${*%:*}"
+  # ignore column number if we get eg path/to/file:123:45
+  IFS=: read -r file line _ <<< "$*"
+  args="+$line $file"
 else
   args="$@"
 fi
